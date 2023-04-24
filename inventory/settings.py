@@ -14,7 +14,9 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from django.contrib.messages import constants as messages
-
+from decouple import config
+import django_heroku
+import dj_database_url
 from config.db_config import DATABASES
 
 # Quick-start development settings - unsuitable for production
@@ -71,6 +73,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'inventory.wsgi.application'
+
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
